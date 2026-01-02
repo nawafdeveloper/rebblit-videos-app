@@ -2,7 +2,7 @@ import { ThemedView } from '@/components/themed-view'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 
-const ExplorePage = () => {
+const CreatePage = () => {
     return (
         <ThemedView style={styles.main}>
 
@@ -10,7 +10,7 @@ const ExplorePage = () => {
     )
 }
 
-export default ExplorePage
+export default CreatePage
 
 const styles = StyleSheet.create({
     main: {
