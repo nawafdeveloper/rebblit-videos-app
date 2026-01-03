@@ -5,7 +5,6 @@ import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import useImageStore from '@/store/create-post-store';
-import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import Icon from "react-native-remix-icon";
 
@@ -20,10 +19,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarStyle: { backgroundColor: 'transparent', position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 999, borderTopColor: Colors[colorScheme ?? 'dark'].card },
-        tabBarBackground: () => (
-          <BlurView intensity={50} tint="default" style={StyleSheet.absoluteFill} />
-        )
+        tabBarStyle: { backgroundColor: Colors[colorScheme ?? 'dark'].background, borderTopColor: Colors[colorScheme ?? 'dark'].card },
       }}>
       <Tabs.Screen
         name="index"

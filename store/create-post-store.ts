@@ -46,7 +46,7 @@ const useImageStore = create<ImageStore>((set) => ({
             preferredAssetRepresentationMode: ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
             presentationStyle: ImagePicker.UIImagePickerPresentationStyle.FULL_SCREEN,
             videoQuality: ImagePicker.UIImagePickerControllerQualityType.IFrame1280x720,
-            allowsEditing: true,
+            allowsEditing: false,
             quality: 0.1,
             videoMaxDuration: 180,
         });

@@ -6,7 +6,6 @@ import {
     Image,
     Pressable,
     StyleSheet,
-    useColorScheme,
     useWindowDimensions
 } from 'react-native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
@@ -27,7 +26,7 @@ interface Props {
     isFocused: boolean;
 }
 
-const VideoItem = ({
+const ExploreVideoFull = ({
     postTitle,
     numbOfLikes,
     numbOfDisLikes,
@@ -37,7 +36,6 @@ const VideoItem = ({
     isFocused
 }: Props) => {
     const { height } = useWindowDimensions();
-    const colorScheme = useColorScheme();
 
     const [isPlaying, setIsPlaying] = useState(true);
     const [showIndicator, setShowIndicator] = useState(false);
@@ -263,7 +261,7 @@ const VideoItem = ({
     );
 };
 
-export default VideoItem;
+export default ExploreVideoFull;
 
 const styles = StyleSheet.create({
     main: {
@@ -275,10 +273,10 @@ const styles = StyleSheet.create({
     },
     overlayer: {
         position: 'absolute',
-        top: 80,
+        top: 0,
         left: 0,
         right: 0,
-        bottom: 80,
+        bottom: 0,
         padding: 16,
         zIndex: 1,
         backgroundColor: 'transparent'
@@ -362,7 +360,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        bottom: 64,
+        bottom: -19,
         zIndex: 3,
         backgroundColor: 'transparent'
     }
