@@ -1,22 +1,26 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useSegments } from 'expo-router';
 import React from 'react';
 
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import useImageStore from '@/store/create-post-store';
 import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import Icon from "react-native-remix-icon";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const segments = useSegments();
+  const isHome = segments.length === 1 && segments[0] === '(tabs)';
+  const { pickImage } = useImageStore();
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarStyle: { backgroundColor: 'transparent', position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 999 },
+        tabBarStyle: { backgroundColor: 'transparent', position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 999, borderTopColor: Colors[colorScheme ?? 'dark'].card },
         tabBarBackground: () => (
           <BlurView intensity={50} tint="default" style={StyleSheet.absoluteFill} />
         )
@@ -40,10 +44,16 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: () => (
-            <ThemedView style={[styles.createButton, { backgroundColor: Colors[colorScheme ?? 'dark'].tint }]}>
-              <Icon name="add-line" size="24" color={Colors[colorScheme ?? 'dark'].background} fallback={null} />
+            <ThemedView style={[styles.createButton, { backgroundColor: isHome ? Colors.dark.tint : Colors[colorScheme ?? 'dark'].tint }]}>
+              <Icon name="add-line" size="24" color={isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background} fallback={null} />
             </ThemedView>
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault()
+            pickImage()
+          }
         }}
       />
       <Tabs.Screen

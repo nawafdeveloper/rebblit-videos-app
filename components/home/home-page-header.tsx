@@ -1,8 +1,9 @@
 import { Colors } from '@/constants/theme';
 import React from 'react';
-import { Image, Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, useColorScheme } from 'react-native';
 import Icon from "react-native-remix-icon";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ThemedText } from '../themed-text';
 import { ThemedView } from '../themed-view';
 
 const HomePageHeader = () => {
@@ -11,18 +12,14 @@ const HomePageHeader = () => {
 
     return (
         <ThemedView style={[styles.main, { paddingTop: insets.top }]}>
-            <Image
-                source={colorScheme === 'dark' ? require('@/assets/images/white-logo.png') : require('@/assets/images/black-logo.png')}
-                resizeMode='contain'
-                style={styles.logo}
-            />
+            <ThemedText style={styles.title}>Feed</ThemedText>
             <ThemedView style={styles.rightContainer}>
                 <Pressable style={styles.button}>
-                    <Icon name="search-line" size="24" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
+                    <Icon name="search-line" size="24" color={Colors.dark.text} fallback={null} />
                 </Pressable>
                 <Pressable style={styles.button}>
                     <ThemedView style={styles.notfBadge} />
-                    <Icon name="notification-3-line" size="24" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
+                    <Icon name="notification-3-line" size="24" color={Colors.dark.text} fallback={null} />
                 </Pressable>
             </ThemedView>
         </ThemedView>
@@ -44,9 +41,10 @@ const styles = StyleSheet.create({
         zIndex: 1,
         backgroundColor: 'transparent'
     },
-    logo: {
-        width: 69,
-        height: 22
+    title: {
+        fontWeight: '600',
+        color: 'white',
+        fontSize: 24
     },
     rightContainer: {
         flexDirection: 'row',
