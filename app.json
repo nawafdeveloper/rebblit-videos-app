@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rebblit-app",
+    "name": "Rebblit",
     "slug": "rebblit-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,13 +13,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FF0000",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.nawafhq.rebblitapp"
     },
     "web": {
       "output": "static",
@@ -31,12 +32,10 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
-          "dark": {
-            "backgroundColor": "#000000"
-          }
+          "imageWidth": 170,
+          "resizeMode": "cover",
+          "backgroundColor": "#FF0000",
+          "enableFullScreenImage_legacy": true
         }
       ],
       "expo-video"
@@ -44,6 +43,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6484d27e-c55b-4cbc-8f82-224b7538737b"
+      }
     }
   }
 }

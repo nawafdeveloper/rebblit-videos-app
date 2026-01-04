@@ -1,11 +1,10 @@
-import * as ImagePicker from 'expo-image-picker';
+import * as MediaLibrary from 'expo-media-library';
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
 import { create } from 'zustand';
 
-type MediaInfo = {
+export type MediaInfo = {
     mediaName: string | null;
-    mediaSize: number | null;
     mediaDuration: number | null;
     uri: string;
     height: number | null;
@@ -15,23 +14,22 @@ type MediaInfo = {
 interface ImageStore {
     media: string | null;
     mediaInfo: MediaInfo | null;
-    setMedia: (uri: string) => void;
-    setMediaInfo: (info: MediaInfo) => void;
-    pickImage: () => Promise<void>;
+
+    assets: { id: string; thumbnailUri: string }[];
+
+    fetchAssets: () => Promise<void>;
+    selectVideoAsset: (assetId: string) => Promise<void>;
 }
 
-const useImageStore = create<ImageStore>((set) => ({
+const useImageStore = create<ImageStore>((set, get) => ({
     media: null,
     mediaInfo: null,
+    assets: [],
 
-    setMedia: (uri) => set({ media: uri }),
-    setMediaInfo: (info) => set({ mediaInfo: info }),
+    fetchAssets: async () => {
+        const { status } = await MediaLibrary.requestPermissionsAsync();
 
-    pickImage: async () => {
-        const permissionResult =
-            await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-        if (!permissionResult.granted) {
+        if (status !== 'granted') {
             Alert.alert(
                 'Permission required',
                 'Permission to access the media library is required.'
@@ -39,37 +37,46 @@ const useImageStore = create<ImageStore>((set) => ({
             return;
         }
 
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: 'videos',
-            defaultTab: 'photos',
-            allowsMultipleSelection: false,
-            preferredAssetRepresentationMode: ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
-            presentationStyle: ImagePicker.UIImagePickerPresentationStyle.FULL_SCREEN,
-            videoQuality: ImagePicker.UIImagePickerControllerQualityType.IFrame1280x720,
-            allowsEditing: false,
-            quality: 0.1,
-            videoMaxDuration: 180,
+        const result = await MediaLibrary.getAssetsAsync({
+            mediaType: MediaLibrary.MediaType.video,
+            sortBy: [MediaLibrary.SortBy.creationTime],
+            first: 500,
         });
 
-        if (result.canceled) return;
+        const assetsWithThumbs = await Promise.all(
+            result.assets.map(async (asset) => {
+                const info = await MediaLibrary.getAssetInfoAsync(asset.id);
+                return {
+                    id: asset.id,
+                    thumbnailUri: info.localUri ?? asset.uri,
+                };
+            })
+        );
 
-        const asset = result.assets[0];
+        set({ assets: assetsWithThumbs });
+    },
 
-        const mediaInfo: MediaInfo = {
-            mediaName: asset.fileName ?? null,
-            mediaSize: asset.fileSize ?? null,
-            mediaDuration: asset.duration ?? null,
-            uri: asset.uri,
-            height: asset.height ?? null,
-            width: asset.width ?? null,
-        };
+    selectVideoAsset: async (assetId: string) => {
+        try {
+            const info = await MediaLibrary.getAssetInfoAsync(assetId);
 
-        set({
-            media: asset.uri,
-            mediaInfo,
-        });
+            const mediaInfo: MediaInfo = {
+                mediaName: info.filename ?? null,
+                mediaDuration: info.duration ?? null,
+                uri: info.uri,
+                height: info.height ?? null,
+                width: info.width ?? null,
+            };
 
-        router.push('/create-post');
+            set({
+                media: info.uri,
+                mediaInfo,
+            });
+
+            router.push('/create-post');
+        } catch (error) {
+            console.error('Failed to select video asset:', error);
+        }
     },
 }));
 

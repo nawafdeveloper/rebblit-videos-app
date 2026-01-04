@@ -1,9 +1,8 @@
 import { Colors } from '@/constants/theme';
 import React from 'react';
-import { Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { Image, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import Icon from "react-native-remix-icon";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ThemedText } from '../themed-text';
 import { ThemedView } from '../themed-view';
 
 const HomePageHeader = () => {
@@ -12,7 +11,11 @@ const HomePageHeader = () => {
 
     return (
         <ThemedView style={[styles.main, { paddingTop: insets.top }]}>
-            <ThemedText style={styles.title}>Feed</ThemedText>
+            <Image
+                source={require('@/assets/images/white-logo.png')}
+                resizeMode='cover'
+                style={styles.logo}
+            />
             <ThemedView style={styles.rightContainer}>
                 <Pressable style={styles.button}>
                     <Icon name="search-line" size="24" color={Colors.dark.text} fallback={null} />
@@ -45,6 +48,10 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: 'white',
         fontSize: 24
+    },
+    logo: {
+        width: 114.77,
+        height: 24
     },
     rightContainer: {
         flexDirection: 'row',

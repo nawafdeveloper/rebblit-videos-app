@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         width: '100%',
         flex: 1,
-        padding: 12
+        padding: 20
     },
     singleParamContainer: {
         flexDirection: 'column',

@@ -2,8 +2,9 @@ import { Colors } from '@/constants/theme';
 import { router } from 'expo-router';
 import * as VideoThumbnails from 'expo-video-thumbnails';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Pressable, StyleSheet, useColorScheme, useWindowDimensions } from 'react-native';
+import { ImageBackground, Pressable, StyleSheet, useColorScheme, useWindowDimensions } from 'react-native';
 import Icon from "react-native-remix-icon";
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { ThemedView } from '../themed-view';
 
 interface Props {
@@ -60,9 +61,17 @@ const ExploreItem = ({ postId, postUrl }: Props) => {
                 </ImageBackground>
             )}
             {loading && (
-                <ThemedView style={{ width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors[colorScheme ?? 'dark'].card }}>
-                    <ActivityIndicator size={'small'} color={Colors[colorScheme ?? 'dark'].text} />
-                </ThemedView>
+                <SkeletonPlaceholder
+                    backgroundColor={Colors[colorScheme ?? 'dark'].card}
+                    highlightColor={Colors[colorScheme ?? 'dark'].background}
+                    angle={45}
+                >
+                    <SkeletonPlaceholder.Item
+                        width={width / 3}
+                        height={200}
+                        borderRadius={0}
+                    />
+                </SkeletonPlaceholder>
             )}
         </Pressable>
     )

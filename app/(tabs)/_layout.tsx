@@ -1,25 +1,23 @@
-import { Tabs, useSegments } from 'expo-router';
+import { router, Tabs, useSegments } from 'expo-router';
 import React from 'react';
 
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import useImageStore from '@/store/create-post-store';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Icon from "react-native-remix-icon";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const segments = useSegments();
   const isHome = segments.length === 1 && segments[0] === '(tabs)';
-  const { pickImage } = useImageStore();
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: isHome ? Colors.dark.tint : Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarStyle: { backgroundColor: isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background, borderTopColor: isHome ? Colors.dark.card : Colors[colorScheme ?? 'dark'].card },
+        tabBarStyle: { backgroundColor: isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background, borderTopColor: isHome ? Colors.dark.card : Colors[colorScheme ?? 'dark'].card, height: Platform.OS === 'android' ? 90 : 82, paddingTop: Platform.OS === 'android' ? 8 : 0 },
       }}>
       <Tabs.Screen
         name="index"
@@ -48,7 +46,7 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault()
-            pickImage()
+            router.push('/image-picker')
           }
         }}
       />

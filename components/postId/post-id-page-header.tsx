@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         left: 0,
         top: 0,
         right: 0,
-        zIndex: 1,
+        zIndex: 10,
         backgroundColor: 'transparent'
     },
     title: {

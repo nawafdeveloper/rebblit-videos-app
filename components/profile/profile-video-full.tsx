@@ -26,7 +26,7 @@ interface Props {
     isFocused: boolean;
 }
 
-const ExploreVideoFull = ({
+const ProfileVideoFull = ({
     postTitle,
     numbOfLikes,
     numbOfDisLikes,
@@ -145,7 +145,7 @@ const ExploreVideoFull = ({
             <ThemedView style={[styles.overlayer, {zIndex: 3}]} pointerEvents='box-none'>
                 <ThemedView style={styles.interactionsContainer}>
                     <ThemedView style={styles.interactionInnerContainer}>
-                        <Pressable onPress={() => console.log('like')} style={styles.interactionButton}>
+                        <Pressable style={styles.interactionButton}>
                             <Icon
                                 name="thumb-up-line"
                                 size={26}
@@ -156,7 +156,7 @@ const ExploreVideoFull = ({
                             </ThemedText>
                         </Pressable>
 
-                        <Pressable onPress={() => console.log('dislike')} style={styles.interactionButton}>
+                        <Pressable style={styles.interactionButton}>
                             <Icon
                                 name="thumb-down-line"
                                 size={26}
@@ -167,7 +167,7 @@ const ExploreVideoFull = ({
                             </ThemedText>
                         </Pressable>
 
-                        <Pressable onPress={() => console.log('comments')} style={styles.interactionButton}>
+                        <Pressable style={styles.interactionButton}>
                             <Icon
                                 name="discuss-line"
                                 size={26}
@@ -178,7 +178,7 @@ const ExploreVideoFull = ({
                             </ThemedText>
                         </Pressable>
 
-                        <Pressable onPress={() => console.log('save')} style={styles.interactionButton}>
+                        <Pressable style={styles.interactionButton}>
                             <Icon
                                 name="bookmark-line"
                                 size={26}
@@ -194,7 +194,7 @@ const ExploreVideoFull = ({
             <ThemedView style={[styles.overlayer, {zIndex: 3}]} pointerEvents='box-none'>
                 <ThemedView style={styles.postDetailsContainer}>
                     <ThemedView style={styles.userInfoContainer}>
-                        <Pressable onPress={() => console.log('user visit')} style={styles.usernameContainer}>
+                        <Pressable style={styles.usernameContainer}>
                             <Image
                                 source={{ uri: userAvatar }}
                                 resizeMode="cover"
@@ -205,7 +205,6 @@ const ExploreVideoFull = ({
                             </ThemedText>
                         </Pressable>
                         <Pressable
-                        onPress={() => console.log('follow')}
                             style={[
                                 styles.followButton,
                                 { backgroundColor: Colors.dark.text }
@@ -262,7 +261,7 @@ const ExploreVideoFull = ({
     );
 };
 
-export default ExploreVideoFull;
+export default ProfileVideoFull;
 
 const styles = StyleSheet.create({
     main: {
