@@ -16,7 +16,7 @@ const PostIdPageHeader = () => {
                 </Pressable>
             <ThemedView style={styles.rightContainer}>
                 <Pressable style={styles.button}>
-                    <Icon name="more-2-line" size="24" color={Colors.dark.text} fallback={null} />
+                    <Icon name="more-2-fill" size="24" color={Colors.dark.text} fallback={null} />
                 </Pressable>
             </ThemedView>
         </ThemedView>

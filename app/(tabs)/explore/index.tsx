@@ -1,28 +1,41 @@
 import ExploreItem from '@/components/explore/explore-item'
 import ExplorePageHeader from '@/components/explore/explore-page-header'
+import ExploreSearchList from '@/components/explore/explore-search-list'
 import { ThemedView } from '@/components/themed-view'
 import { homeData } from '@/mocks/home-data'
-import React from 'react'
+import React, { useState } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
 const ExplorePage = () => {
+    const [isFocus, setIsFocus] = useState(false);
+
     return (
         <ThemedView style={styles.main}>
-            <ExplorePageHeader />
-            <FlatList
-                data={homeData}
-                keyExtractor={(item) => item.postId}
-                renderItem={({ item, index }) => (
-                    <ExploreItem
-                        key={index}
-                        postUrl={item.postUrl}
-                        postId={item.postId}
-                    />
-                )}
-                showsVerticalScrollIndicator={false}
-                numColumns={3}
-                contentContainerStyle={{ paddingBottom: 82 }}
+            <ExplorePageHeader
+                isFocus={isFocus}
+                setIsFocus={setIsFocus}
             />
+            <ThemedView style={styles.content}>
+                <FlatList
+                    data={homeData}
+                    keyExtractor={(item) => item.postId}
+                    renderItem={({ item }) => (
+                        <ExploreItem
+                            postUrl={item.postUrl}
+                            postId={item.postId}
+                        />
+                    )}
+                    showsVerticalScrollIndicator={false}
+                    numColumns={3}
+                    contentContainerStyle={{ gap: 1 }}
+                    columnWrapperStyle={{ gap: 1 }}
+                />
+                {isFocus && (
+                    <ThemedView style={styles.searchOverlay}>
+                        <ExploreSearchList />
+                    </ThemedView>
+                )}
+            </ThemedView>
         </ThemedView>
     )
 }
@@ -31,6 +44,14 @@ export default ExplorePage
 
 const styles = StyleSheet.create({
     main: {
-        flex: 1
-    }
-})
+        flex: 1,
+    },
+    content: {
+        flex: 1,
+        position: 'relative',
+    },
+    searchOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        zIndex: 10,
+    },
+});

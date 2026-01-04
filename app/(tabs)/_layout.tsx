@@ -17,9 +17,9 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: isHome ? Colors.dark.tint : Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarStyle: { backgroundColor: Colors[colorScheme ?? 'dark'].background, borderTopColor: Colors[colorScheme ?? 'dark'].card },
+        tabBarStyle: { backgroundColor: isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background, borderTopColor: isHome ? Colors.dark.card : Colors[colorScheme ?? 'dark'].card },
       }}>
       <Tabs.Screen
         name="index"
