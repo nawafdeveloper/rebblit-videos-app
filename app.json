@@ -20,7 +20,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.nawafhq.rebblitapp"
+      "package": "com.nawafhq.rebblitapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "output": "static",
@@ -36,6 +37,15 @@
           "resizeMode": "cover",
           "backgroundColor": "#FF0000",
           "enableFullScreenImage_legacy": true
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#ffffff",
+          "defaultChannel": "default",
+          "enableBackgroundRemoteNotifications": true
         }
       ],
       "expo-video"

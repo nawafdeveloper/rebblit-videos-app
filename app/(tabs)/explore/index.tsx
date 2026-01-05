@@ -2,12 +2,14 @@ import ExploreItem from '@/components/explore/explore-item'
 import ExplorePageHeader from '@/components/explore/explore-page-header'
 import ExploreSearchList from '@/components/explore/explore-search-list'
 import { ThemedView } from '@/components/themed-view'
+import { useIsTablet } from '@/hooks/use-tablet'
 import { homeData } from '@/mocks/home-data'
 import React, { useState } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
 const ExplorePage = () => {
     const [isFocus, setIsFocus] = useState(false);
+    const isTablet = useIsTablet();
 
     return (
         <ThemedView style={styles.main}>
@@ -26,7 +28,7 @@ const ExplorePage = () => {
                         />
                     )}
                     showsVerticalScrollIndicator={false}
-                    numColumns={3}
+                    numColumns={isTablet ? 4 : 3}
                     contentContainerStyle={{ gap: 1 }}
                     columnWrapperStyle={{ gap: 1 }}
                 />

@@ -17,6 +17,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: isHome ? Colors.dark.tint : Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
+        tabBarLabelPosition: 'below-icon',
         tabBarStyle: { backgroundColor: isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background, borderTopColor: isHome ? Colors.dark.card : Colors[colorScheme ?? 'dark'].card, height: Platform.OS === 'android' ? 90 : 82, paddingTop: Platform.OS === 'android' ? 8 : 0 },
       }}>
       <Tabs.Screen

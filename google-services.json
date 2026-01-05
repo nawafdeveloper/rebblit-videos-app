@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343034200694",
+    "project_id": "rebblit-test-6cc1f",
+    "storage_bucket": "rebblit-test-6cc1f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343034200694:android:ed5fb38ea45b54d4ce1557",
+        "android_client_info": {
+          "package_name": "com.nawafhq.rebblitapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkScV15x1Ak5jEHMMIgY3H5VR_jo-2cgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

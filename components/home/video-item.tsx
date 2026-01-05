@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
         top: 80,
         left: 0,
         right: 0,
-        bottom: 80,
+        bottom: 90,
         padding: 16,
         zIndex: 1,
         backgroundColor: 'transparent'
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        bottom: 64,
+        bottom: 72,
         zIndex: 3,
         backgroundColor: 'transparent'
     }
