@@ -48,7 +48,8 @@
           "enableBackgroundRemoteNotifications": true
         }
       ],
-      "expo-video"
+      "expo-video",
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true,

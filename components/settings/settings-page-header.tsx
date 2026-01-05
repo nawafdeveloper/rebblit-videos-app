@@ -12,11 +12,13 @@ const SettingsPageHeader = () => {
     const colorScheme = useColorScheme();
 
     return (
-        <ThemedView style={[styles.main, { paddingTop: insets.top }]}>
+        <ThemedView style={[styles.main, { paddingTop: insets.top * 1.2 }]}>
             <Pressable onPress={() => router.back()}>
                 <Icon name="arrow-left-line" size="24" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
             </Pressable>
-            <ThemedText style={styles.title}>Settings</ThemedText>
+            <ThemedView style={[styles.titleContainer, { top: insets.top * 1.2 }]} pointerEvents='none'>
+                <ThemedText style={styles.title}>Settings</ThemedText>
+            </ThemedView>
         </ThemedView>
     )
 }
@@ -33,8 +35,15 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         zIndex: 999
     },
+    titleContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        backgroundColor: 'transparent'
+    },
     title: {
         fontWeight: '600',
-        fontSize: 24
+        textAlign: 'center',
+        fontSize: 18
     },
 })

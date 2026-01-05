@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { ImageBackground, Pressable, StyleSheet, useColorScheme, useWindowDimensions } from 'react-native';
 import Icon from "react-native-remix-icon";
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { ThemedText } from '../themed-text';
 import { ThemedView } from '../themed-view';
 
 interface Props {
@@ -56,7 +57,8 @@ const ProfilePageItem = ({ postId, postUrl }: Props) => {
                     style={{ width: '100%', height: '100%' }}
                 >
                     <ThemedView style={styles.topContainer}>
-                        <Icon name="play-circle-fill" size="18" color={Colors.dark.text} fallback={null} />
+                        <Icon name="eye-fill" size="16" color={Colors.dark.text} fallback={null} />
+                        <ThemedText style={styles.text}>342K</ThemedText>
                     </ThemedView>
                 </ImageBackground>
             )}
@@ -82,10 +84,18 @@ export default ProfilePageItem
 const styles = StyleSheet.create({
     topContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
+        gap: 6,
         padding: 6,
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        flex: 1,
+    },
+    text: {
+        fontSize: 13,
+        fontWeight: '800',
+        color: 'white',
+        lineHeight: 15
     },
     iconContainer: {
         backgroundColor: 'white',

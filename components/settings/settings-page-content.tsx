@@ -94,7 +94,7 @@ const SettingsPageContent = () => {
                     <Icon name="arrow-right-s-line" size="24" color='gray' fallback={null} />
                 </Pressable>
                 <ThemedView style={[styles.divider, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]} />
-                <Pressable onPress={() => pressRouting('Logout account')} style={styles.buttonContainer}>
+                <Pressable style={styles.buttonContainer}>
                     <ThemedView style={styles.leftContainer}>
                         <Icon name="logout-box-r-line" size="20" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
                         <ThemedText>Logout account</ThemedText>
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
     divider: {
         marginVertical: 16,
         width: '100%',
-        height: 2
+        height: 6
     }
 })

@@ -6,7 +6,7 @@ import { ThemedView } from '../themed-view';
 
 const SettingsPlaybackSection = () => {
     const insets = useSafeAreaInsets();
-    const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme(); 
 
     return (
         <ScrollView style={{ flex: 1 }}>

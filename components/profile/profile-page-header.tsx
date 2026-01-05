@@ -31,7 +31,6 @@ const ProfilePageHeader = () => {
 
     return (
         <ThemedView style={[styles.main, { paddingTop: insets.top }]}>
-            <ThemedText style={styles.title}>Profile</ThemedText>
             <ThemedView style={styles.rightSideContainer}>
                 <Pressable onPress={handlePresentModalPress}>
                     <Icon name="more-2-fill" size="24" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 10,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         paddingHorizontal: 16,
         paddingBottom: 16,
         zIndex: 999

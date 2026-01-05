@@ -10,15 +10,18 @@ import Icon from "react-native-remix-icon";
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const segments = useSegments();
-  const isHome = segments.length === 1 && segments[0] === '(tabs)';
+  const home = segments.length === 1 && segments[0] === '(tabs)';
+  const postId = segments[2] === '[postId]';
+  const profilePost = segments[1] === '[postId]';
+  const isDark = home || postId || profilePost;
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: isHome ? Colors.dark.tint : Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: isDark ? Colors.dark.tint : Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarLabelPosition: 'below-icon',
-        tabBarStyle: { backgroundColor: isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background, borderTopColor: isHome ? Colors.dark.card : Colors[colorScheme ?? 'dark'].card, height: Platform.OS === 'android' ? 90 : 82, paddingTop: Platform.OS === 'android' ? 8 : 0 },
+        tabBarStyle: { backgroundColor: isDark ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background, borderTopColor: isDark ? Colors.dark.card : Colors[colorScheme ?? 'dark'].card, height: Platform.OS === 'android' ? 90 : 82, paddingTop: Platform.OS === 'android' ? 8 : 0, elevation: 0 },
       }}>
       <Tabs.Screen
         name="index"
@@ -39,8 +42,8 @@ export default function TabLayout() {
         options={{
           title: '',
           tabBarIcon: () => (
-            <ThemedView style={[styles.createButton, { backgroundColor: isHome ? Colors.dark.tint : Colors[colorScheme ?? 'dark'].tint }]}>
-              <Icon name="add-line" size="24" color={isHome ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background} fallback={null} />
+            <ThemedView style={[styles.createButton, { backgroundColor: isDark ? Colors.dark.tint : Colors[colorScheme ?? 'dark'].tint }]}>
+              <Icon name="add-line" size="24" color={isDark ? Colors.dark.background : Colors[colorScheme ?? 'dark'].background} fallback={null} />
             </ThemedView>
           ),
         }}
