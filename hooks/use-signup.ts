@@ -11,8 +11,20 @@ export const useSignup = () => {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
+    const [isError, setIsError] = useState(false);
+    const [errorText, setErrorText] = useState('');
 
     const handleSignup = async () => {
+        setIsError(false);
+        setErrorText('');
+
+        if (!email || !password || !name || !username) {
+            showToast('All inputs are required to create account', 'error');
+            setIsError(true);
+            setErrorText('All inputs are required to create account');
+            return;
+        }
+
         try {
             setLoading(true);
 
@@ -26,13 +38,19 @@ export const useSignup = () => {
 
             if (error) {
                 showToast(error.message || 'There was error occured, please try again.', 'error');
+                setIsError(true);
+                setErrorText(error.message || 'There was error occured, please try again.');
                 return;
             }
 
             showToast('You have signup successfully.')
         } catch (error: any) {
             showToast(error.message || 'You lost connection with network, please try again later', 'error');
+            setIsError(true);
+            setErrorText(error.message || 'There was error occured, please try again.');
             return;
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,6 +63,8 @@ export const useSignup = () => {
         setName,
         username,
         setUsername,
-        handleSignup
+        handleSignup,
+        isError,
+        errorText
     }
 };

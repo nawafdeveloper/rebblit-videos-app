@@ -7,22 +7,27 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [session, setSession] = useState<any>();
+  const [isReady, setIsReady] = useState(false);
 
   const handleGetSession = async () => {
-    const { data: session } = await authClient.getSession();
-    setSession(session);
+    try {
+      const { data: session } = await authClient.getSession();
+      setSession(session);
+    } catch { }
+    finally {
+      setIsReady(true);
+    }
   };
 
   useEffect(() => {
@@ -37,6 +42,16 @@ export default function RootLayout() {
     return () => subscription.remove();
   }, []);
 
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hide();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
+
   return (
     <GestureHandlerRootView>
       <NotificationsProvider>
@@ -45,9 +60,16 @@ export default function RootLayout() {
             <ToastProvider>
               <LoadingProvider>
                 <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
-                  <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                  <Stack.Protected guard={!session}>
+                    <Stack.Screen name="index" options={{ headerShown: false, animation: 'none' }} />
+                    <Stack.Screen name="login" options={{ headerShown: false }} />
+                    <Stack.Screen name="signup" options={{ headerShown: false }} />
+                  </Stack.Protected>
+                  <Stack.Protected guard={session}>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none' }} />
+                    <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
+                    <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                  </Stack.Protected>
                 </Stack>
                 <StatusBar style="auto" />
               </LoadingProvider>

@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/theme";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { ActivityIndicator, StyleSheet, useColorScheme, View } from "react-native";
 
@@ -14,7 +15,7 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
 
     const backgroundColor =
         colorScheme === "dark"
-            ? "rgba(255,255,255,0.4)"
+            ? "rgba(255,255,255,0.2)"
             : "rgba(0,0,0,0.4)";
 
     return (
@@ -23,7 +24,7 @@ export function LoadingProvider({ children }: { children: ReactNode }) {
 
             {loading && (
                 <View style={[StyleSheet.absoluteFill, styles.overlay, { backgroundColor }]}>
-                    <ActivityIndicator size="small" />
+                    <ActivityIndicator size="small" color={Colors[colorScheme ?? 'dark'].tint} />
                 </View>
             )}
         </LoadingContext.Provider>
