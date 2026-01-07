@@ -1,5 +1,5 @@
 import { expoClient } from "@better-auth/expo/client";
-import { emailOTPClient, usernameClient } from "better-auth/client/plugins";
+import { emailOTPClient, inferAdditionalFields, usernameClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import * as SecureStore from "expo-secure-store";
 
@@ -12,6 +12,16 @@ export const authClient = createAuthClient({
             storage: SecureStore,
         }),
         usernameClient(),
-        emailOTPClient()
+        emailOTPClient(),
+        inferAdditionalFields({
+            user: {
+                hasProfile: {
+                    type: "boolean",
+                    defaultValue: false
+                }
+            }
+        })
     ]
 });
+
+export type Session = typeof authClient.$Infer.Session

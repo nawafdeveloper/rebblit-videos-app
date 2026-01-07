@@ -17,9 +17,9 @@ export const useLogin = () => {
         setErrorText('');
 
         if (!username || !password) {
-            showToast('All inputs are required to create account', 'error');
+            showToast('All inputs are required to login', 'error');
             setIsError(true);
-            setErrorText('All inputs are required to create account');
+            setErrorText('All inputs are required to login');
             return;
         }
 

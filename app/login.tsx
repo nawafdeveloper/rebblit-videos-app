@@ -41,7 +41,7 @@ const LoginPage = () => {
                     <ThemedView style={styles.fieldsContainer}>
                         <ThemedView style={styles.inputContentContainer}>
                             <ThemedText style={styles.inputLabel}>Username</ThemedText>
-                            <ThemedView style={[styles.inputContainer, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
+                            <ThemedView style={[styles.inputContainer, { borderBottomColor: Colors[colorScheme ?? 'dark'].lightCard }]}>
                                 <TextInput
                                     value={username}
                                     onChangeText={setUsername}
@@ -54,7 +54,7 @@ const LoginPage = () => {
                         </ThemedView>
                         <ThemedView style={styles.inputContentContainer}>
                             <ThemedText style={styles.inputLabel}>Password</ThemedText>
-                            <ThemedView style={[styles.inputContainer, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
+                            <ThemedView style={[styles.inputContainer, { borderBottomColor: Colors[colorScheme ?? 'dark'].lightCard }]}>
                                 <TextInput
                                     value={password}
                                     onChangeText={setPassword}
@@ -119,16 +119,14 @@ const styles = StyleSheet.create({
     },
     inputLabel: {
         fontSize: 14,
-        color: 'gray'
+        fontWeight: '600'
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-        paddingHorizontal: 18,
-        paddingVertical: Platform.OS === 'android' ? 2 : 8,
-        borderRadius: 99,
-        borderCurve: 'continuous',
+        paddingVertical: Platform.OS === 'android' ? 8 : 18,
+        borderBottomWidth: 1
     },
     input: {
         flex: 1

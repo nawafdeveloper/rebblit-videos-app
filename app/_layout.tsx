@@ -1,4 +1,5 @@
 import GlobalLoading from '@/components/global-loading';
+import { Colors } from '@/constants/theme';
 import { LoadingProvider } from '@/context/loading-context';
 import { NotificationsProvider } from '@/context/notification-context';
 import { ToastProvider } from '@/context/toast-context';
@@ -45,18 +46,24 @@ export default function RootLayout() {
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <ToastProvider>
               <LoadingProvider>
-                <Stack>
+                <Stack screenOptions={{
+                  contentStyle: { backgroundColor: Colors[colorScheme ?? 'dark'].background }
+                }}>
                   <Stack.Protected guard={!session}>
-                    <Stack.Screen name="index" options={{ headerShown: false, animation: 'none' }} />
+                    <Stack.Screen name="index" options={{ headerShown: false, animation: 'none', gestureEnabled: false }} />
                     <Stack.Screen name="login" options={{ headerShown: false }} />
                     <Stack.Screen name="signup" options={{ headerShown: false }} />
                     <Stack.Screen name="request-otp-reset-password" options={{ headerShown: false }} />
-                    <Stack.Screen name="reset-password" options={{ headerShown: false }} />
                   </Stack.Protected>
                   <Stack.Protected guard={session?.session.token.length !== 0}>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none' }} />
-                    <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
-                    <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                    <Stack.Protected guard={!session?.user.hasProfile}>
+                      <Stack.Screen name="new-profile" options={{ headerShown: false, gestureEnabled: false, animation: 'none' }} />
+                    </Stack.Protected>
+                    <Stack.Protected guard={session?.user.hasProfile === true}>
+                      <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none', gestureEnabled: false }} />
+                      <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
+                      <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                    </Stack.Protected>
                   </Stack.Protected>
                 </Stack>
                 <StatusBar style="auto" />

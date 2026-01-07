@@ -4,7 +4,7 @@ import { Colors } from '@/constants/theme';
 import { useSignup } from '@/hooks/use-signup';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, TextInput, useColorScheme } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, TextInput, useColorScheme } from 'react-native';
 import Icon from "react-native-remix-icon";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -42,68 +42,73 @@ const SignupPage = () => {
                     </Pressable>
                 </ThemedView>
                 <ThemedView style={styles.content}>
-                    <ThemedView style={styles.fieldsContainer}>
-                        <ThemedView style={styles.inputContentContainer}>
-                            <ThemedText style={styles.inputLabel}>Email address</ThemedText>
-                            <ThemedView style={[styles.inputContainer, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
-                                <TextInput
-                                    value={email}
-                                    onChangeText={setEmail}
-                                    placeholderTextColor={'gray'}
-                                    placeholder='yourname@mail.com'
-                                    autoCapitalize='none'
-                                    style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
-                                />
+                    <ScrollView
+                        style={{ flex: 1 }}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <ThemedView style={styles.fieldsContainer}>
+                            <ThemedView style={styles.inputContentContainer}>
+                                <ThemedText style={styles.inputLabel}>Email address</ThemedText>
+                                <ThemedView style={[styles.inputContainer, { borderBottomColor: Colors[colorScheme ?? 'dark'].lightCard }]}>
+                                    <TextInput
+                                        value={email}
+                                        onChangeText={setEmail}
+                                        placeholderTextColor={'gray'}
+                                        placeholder='yourname@mail.com'
+                                        autoCapitalize='none'
+                                        style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
+                                    />
+                                </ThemedView>
                             </ThemedView>
+                            <ThemedView style={styles.inputContentContainer}>
+                                <ThemedText style={styles.inputLabel}>Password</ThemedText>
+                                <ThemedView style={[styles.inputContainer, { borderBottomColor: Colors[colorScheme ?? 'dark'].lightCard }]}>
+                                    <TextInput
+                                        value={password}
+                                        onChangeText={setPassword}
+                                        placeholder='********'
+                                        secureTextEntry={!isPassVisible}
+                                        placeholderTextColor={'gray'}
+                                        style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
+                                    />
+                                    <Pressable onPress={handleTogglePass}>
+                                        <Icon name={isPassVisible ? 'eye-off-line' : 'eye-line'} size="20" color='gray' fallback={null} />
+                                    </Pressable>
+                                </ThemedView>
+                            </ThemedView>
+                            <ThemedView style={styles.inputContentContainer}>
+                                <ThemedText style={styles.inputLabel}>Display name</ThemedText>
+                                <ThemedView style={[styles.inputContainer, { borderBottomColor: Colors[colorScheme ?? 'dark'].lightCard }]}>
+                                    <TextInput
+                                        value={name}
+                                        onChangeText={setName}
+                                        placeholder='Mohammed Ali'
+                                        placeholderTextColor={'gray'}
+                                        style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
+                                    />
+                                </ThemedView>
+                            </ThemedView>
+                            <ThemedView style={styles.inputContentContainer}>
+                                <ThemedText style={styles.inputLabel}>Username</ThemedText>
+                                <ThemedView style={[styles.inputContainer, { borderBottomColor: Colors[colorScheme ?? 'dark'].lightCard }]}>
+                                    <TextInput
+                                        value={username}
+                                        onChangeText={setUsername}
+                                        placeholder='@mohammed_ali'
+                                        autoCapitalize='none'
+                                        placeholderTextColor={'gray'}
+                                        style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
+                                    />
+                                </ThemedView>
+                            </ThemedView>
+                            {isError && (
+                                <ThemedView style={styles.errorContainer}>
+                                    <Icon name="information-line" size="26" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
+                                    <ThemedText style={styles.errorText}>{errorText}</ThemedText>
+                                </ThemedView>
+                            )}
                         </ThemedView>
-                        <ThemedView style={styles.inputContentContainer}>
-                            <ThemedText style={styles.inputLabel}>Password</ThemedText>
-                            <ThemedView style={[styles.inputContainer, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
-                                <TextInput
-                                    value={password}
-                                    onChangeText={setPassword}
-                                    placeholder='********'
-                                    secureTextEntry={!isPassVisible}
-                                    placeholderTextColor={'gray'}
-                                    style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
-                                />
-                                <Pressable onPress={handleTogglePass}>
-                                    <Icon name={isPassVisible ? 'eye-off-line' : 'eye-line'} size="20" color='gray' fallback={null} />
-                                </Pressable>
-                            </ThemedView>
-                        </ThemedView>
-                        <ThemedView style={styles.inputContentContainer}>
-                            <ThemedText style={styles.inputLabel}>Display name</ThemedText>
-                            <ThemedView style={[styles.inputContainer, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
-                                <TextInput
-                                    value={name}
-                                    onChangeText={setName}
-                                    placeholder='Mohammed Ali'
-                                    placeholderTextColor={'gray'}
-                                    style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
-                                />
-                            </ThemedView>
-                        </ThemedView>
-                        <ThemedView style={styles.inputContentContainer}>
-                            <ThemedText style={styles.inputLabel}>Username</ThemedText>
-                            <ThemedView style={[styles.inputContainer, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
-                                <TextInput
-                                    value={username}
-                                    onChangeText={setUsername}
-                                    placeholder='@mohammed_ali'
-                                    autoCapitalize='none'
-                                    placeholderTextColor={'gray'}
-                                    style={[styles.input, { color: Colors[colorScheme ?? 'dark'].text }]}
-                                />
-                            </ThemedView>
-                        </ThemedView>
-                        {isError && (
-                            <ThemedView style={styles.errorContainer}>
-                                <Icon name="information-line" size="26" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
-                                <ThemedText style={styles.errorText}>{errorText}</ThemedText>
-                            </ThemedView>
-                        )}
-                    </ThemedView>
+                    </ScrollView>
                 </ThemedView>
                 <Pressable onPress={handleSignup} style={[styles.signupButton, { backgroundColor: Colors[colorScheme ?? 'dark'].text }]}>
                     <ThemedText style={[styles.signupButtonText, { color: Colors[colorScheme ?? 'dark'].background }]}>Create account</ThemedText>
@@ -133,7 +138,8 @@ const styles = StyleSheet.create({
     },
     fieldsContainer: {
         flexDirection: 'column',
-        gap: 24
+        gap: 24,
+        paddingBottom: 20
     },
     inputContentContainer: {
         flexDirection: 'column',
@@ -143,16 +149,14 @@ const styles = StyleSheet.create({
     },
     inputLabel: {
         fontSize: 14,
-        color: 'gray'
+        fontWeight: '600'
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-        paddingHorizontal: 18,
-        paddingVertical: Platform.OS === 'android' ? 2 : 8,
-        borderRadius: 99,
-        borderCurve: 'continuous',
+        paddingVertical: Platform.OS === 'android' ? 8 : 18,
+        borderBottomWidth: 1
     },
     input: {
         flex: 1

@@ -17,6 +17,7 @@ const MainPage = () => {
                 resizeMode='cover'
                 style={styles.logo}
             />
+            <ThemedText style={styles.title}>Welcome to the best platform</ThemedText>
             <ThemedView style={{ flex: 1 }} />
             <ThemedView style={styles.bottomContainer}>
                 <Pressable onPress={() => router.push('/signup')} style={[styles.button, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]}>
@@ -26,7 +27,7 @@ const MainPage = () => {
                     <ThemedText style={styles.buttonText}>Login to exist account</ThemedText>
                 </Pressable>
                 <ThemedText style={styles.agreementText}>
-                    By continuing, you agree to our Terms of Service and Privacy Policy, and accept responsibility for keeping your account information secure.
+                    By continuing, you agree to our <ThemedText style={styles.bold}>Terms of Service</ThemedText> and <ThemedText style={styles.bold}>Privacy Policy</ThemedText>, and accept responsibility for keeping your account information secure.
                 </ThemedText>
             </ThemedView>
         </ThemedView>
@@ -38,16 +39,22 @@ export default MainPage
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        paddingHorizontal: 16,
+        paddingHorizontal: 28,
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         paddingBottom: 120,
-        paddingTop: 170
+        paddingTop: 120,
+        gap: 40
     },
     logo: {
         width: 191.29,
         height: 40,
+    },
+    title: {
+        fontWeight: '800',
+        fontSize: 44,
+        lineHeight: 58
     },
     bottomContainer: {
         flexDirection: 'column',
@@ -71,6 +78,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         textAlign: 'center',
         marginTop: 8,
-        color: 'gray'
+        color: 'gray',
+        lineHeight: 18
+    },
+    bold: {
+        fontWeight: '600',
+        fontSize: 12,
+        color: Colors.dark.blue
     }
 })
