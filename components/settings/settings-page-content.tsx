@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/theme';
+import { useLogout } from '@/hooks/use-logout';
 import { router } from 'expo-router';
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, useColorScheme } from 'react-native';
@@ -10,6 +11,7 @@ import { ThemedView } from '../themed-view';
 const SettingsPageContent = () => {
     const insets = useSafeAreaInsets();
     const colorScheme = useColorScheme();
+    const { handleLogout } = useLogout();
 
     const pressRouting = (settingId: string) => {
         router.push({ pathname: '/(tabs)/profile/settings/[settingId]', params: { settingId: settingId } })
@@ -94,7 +96,7 @@ const SettingsPageContent = () => {
                     <Icon name="arrow-right-s-line" size="24" color='gray' fallback={null} />
                 </Pressable>
                 <ThemedView style={[styles.divider, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]} />
-                <Pressable style={styles.buttonContainer}>
+                <Pressable onPress={handleLogout} style={styles.buttonContainer}>
                     <ThemedView style={styles.leftContainer}>
                         <Icon name="logout-box-r-line" size="20" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
                         <ThemedText>Logout account</ThemedText>

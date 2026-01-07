@@ -31,9 +31,11 @@ const SignupPage = () => {
 
     return (
         <KeyboardAvoidingView
-            style={styles.main}
+            style={[styles.main, { backgroundColor: Colors[colorScheme ?? 'dark'].background }]}
+            behavior='padding'
+            keyboardVerticalOffset={0}
         >
-            <ThemedView style={[styles.main, { paddingTop: insets.top }]}>
+            <ThemedView style={[styles.main, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
                 <ThemedView style={styles.header}>
                     <Pressable onPress={() => router.back()}>
                         <Icon name="arrow-left-line" size="26" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
@@ -102,10 +104,10 @@ const SignupPage = () => {
                             </ThemedView>
                         )}
                     </ThemedView>
-                    <Pressable onPress={handleSignup} style={[styles.signupButton, { backgroundColor: Colors[colorScheme ?? 'dark'].text }]}>
-                        <ThemedText style={[styles.signupButtonText, { color: Colors[colorScheme ?? 'dark'].background }]}>Create account</ThemedText>
-                    </Pressable>
                 </ThemedView>
+                <Pressable onPress={handleSignup} style={[styles.signupButton, { backgroundColor: Colors[colorScheme ?? 'dark'].text }]}>
+                    <ThemedText style={[styles.signupButtonText, { color: Colors[colorScheme ?? 'dark'].background }]}>Create account</ThemedText>
+                </Pressable>
             </ThemedView>
         </KeyboardAvoidingView>
     )
@@ -128,7 +130,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        paddingBottom: 70
     },
     fieldsContainer: {
         flexDirection: 'column',
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
         borderCurve: 'continuous',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%'
+        marginHorizontal: 16
     },
     signupButtonText: {
         fontWeight: '600'

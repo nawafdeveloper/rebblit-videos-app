@@ -1,4 +1,5 @@
 import { Colors } from '@/constants/theme';
+import { useLogout } from '@/hooks/use-logout';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { router } from 'expo-router';
 import React, { useCallback, useRef } from 'react';
@@ -11,6 +12,7 @@ import { ThemedView } from '../themed-view';
 const ProfilePageHeader = () => {
     const insets = useSafeAreaInsets();
     const colorScheme = useColorScheme();
+    const { handleLogout } = useLogout();
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
     const handlePresentModalPress = useCallback(() => {
@@ -60,7 +62,7 @@ const ProfilePageHeader = () => {
                             <Icon name="questionnaire-line" size="24" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
                             <ThemedText style={styles.sheetButtonText}>Help center</ThemedText>
                         </Pressable>
-                        <Pressable style={[styles.sheetButton, { borderBottomWidth: 0 }]}>
+                        <Pressable onPress={handleLogout} style={[styles.sheetButton, { borderBottomWidth: 0 }]}>
                             <Icon name="logout-box-r-line" size="24" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
                             <ThemedText style={styles.sheetButtonText}>Logout account</ThemedText>
                         </Pressable>

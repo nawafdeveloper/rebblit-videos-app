@@ -1,3 +1,4 @@
+import GlobalLoading from '@/components/global-loading';
 import { LoadingProvider } from '@/context/loading-context';
 import { NotificationsProvider } from '@/context/notification-context';
 import { ToastProvider } from '@/context/toast-context';
@@ -9,7 +10,7 @@ import * as Notifications from 'expo-notifications';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
@@ -17,22 +18,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [session, setSession] = useState<any>();
-  const [isReady, setIsReady] = useState(false);
-
-  const handleGetSession = async () => {
-    try {
-      const { data: session } = await authClient.getSession();
-      setSession(session);
-    } catch { }
-    finally {
-      setIsReady(true);
-    }
-  };
-
-  useEffect(() => {
-    handleGetSession();
-  }, []);
+  const { data: session, isPending } = authClient.useSession();
 
   useEffect(() => {
     Notifications.setBadgeCountAsync(0);
@@ -43,13 +29,13 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (isReady) {
+    if (!isPending) {
       SplashScreen.hide();
     }
-  }, [isReady]);
+  }, [isPending]);
 
-  if (!isReady) {
-    return null;
+  if (isPending) {
+    return <GlobalLoading />;
   }
 
   return (
@@ -64,8 +50,10 @@ export default function RootLayout() {
                     <Stack.Screen name="index" options={{ headerShown: false, animation: 'none' }} />
                     <Stack.Screen name="login" options={{ headerShown: false }} />
                     <Stack.Screen name="signup" options={{ headerShown: false }} />
+                    <Stack.Screen name="request-otp-reset-password" options={{ headerShown: false }} />
+                    <Stack.Screen name="reset-password" options={{ headerShown: false }} />
                   </Stack.Protected>
-                  <Stack.Protected guard={session}>
+                  <Stack.Protected guard={session?.session.token.length !== 0}>
                     <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none' }} />
                     <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
                     <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />

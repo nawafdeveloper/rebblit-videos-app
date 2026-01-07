@@ -3,22 +3,20 @@ import { useToast } from "@/context/toast-context";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 
-export const useSignup = () => {
-    const { showToast } = useToast();
+export const useLogin = () => {
     const { setLoading } = useLoading();
+    const { showToast } = useToast();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [isError, setIsError] = useState(false);
     const [errorText, setErrorText] = useState('');
 
-    const handleSignup = async () => {
+    const handleLogin = async () => {
         setIsError(false);
         setErrorText('');
 
-        if (!email || !password || !name || !username) {
+        if (!username || !password) {
             showToast('All inputs are required to create account', 'error');
             setIsError(true);
             setErrorText('All inputs are required to create account');
@@ -28,12 +26,9 @@ export const useSignup = () => {
         try {
             setLoading(true);
 
-            const { error } = await authClient.signUp.email({
-                email,
-                name,
-                password,
+            const { error } = await authClient.signIn.username({
                 username,
-                displayUsername: name,
+                password,
             });
 
             if (error) {
@@ -43,28 +38,23 @@ export const useSignup = () => {
                 return;
             }
 
-            showToast('You have signup successfully.');
+            showToast('You have logged in successfully.');
         } catch (error: any) {
             showToast(error.message || 'You lost connection with network, please try again later', 'error');
             setIsError(true);
             setErrorText(error.message || 'There was error occured, please try again.');
-            return;
         } finally {
             setLoading(false);
         }
     };
 
     return {
-        email,
-        setEmail,
-        password,
-        setPassword,
-        name,
-        setName,
         username,
         setUsername,
-        handleSignup,
+        password,
+        setPassword,
         isError,
-        errorText
+        errorText,
+        handleLogin
     }
 };

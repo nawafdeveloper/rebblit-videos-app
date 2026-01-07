@@ -73,7 +73,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                     },
                 ]}
             >
-                <Icon name={iconName[type]} size={20} />
+                <Icon name={iconName[type]} size={20} color={Colors[colorScheme ?? "dark"].text} />
                 <Text
                     style={[
                         styles.text,
