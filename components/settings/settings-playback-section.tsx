@@ -1,12 +1,29 @@
+import { Colors } from '@/constants/theme';
+import { usePrivacySettings } from '@/queries/privacy-settings.query';
 import React from 'react';
 import { ScrollView, StyleSheet, Switch, useColorScheme } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import GlobalLoading from '../global-loading';
 import { ThemedText } from '../themed-text';
 import { ThemedView } from '../themed-view';
 
 const SettingsPlaybackSection = () => {
     const insets = useSafeAreaInsets();
-    const colorScheme = useColorScheme(); 
+    const colorScheme = useColorScheme();
+    const {
+        data,
+        isLoading,
+        isUpdating,
+        updateSetting,
+    } = usePrivacySettings();
+
+    if (isLoading) {
+        return <GlobalLoading />
+    }
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <ScrollView style={{ flex: 1 }}>
@@ -18,7 +35,20 @@ const SettingsPlaybackSection = () => {
                             When autoplay is enabled, a suggested video will automatically play next
                         </ThemedText>
                     </ThemedView>
-                    <Switch />
+                    <Switch
+                        value={data.autoPlayVideo}
+                        disabled={isUpdating}
+                        onValueChange={(value) =>
+                            updateSetting({
+                                autoPlayVideo: value
+                            })
+                        }
+                        trackColor={{
+                            true: Colors[colorScheme ?? 'dark'].blue,
+                            false: Colors[colorScheme ?? 'dark'].card,
+                        }}
+                        thumbColor={data.autoPlayVideo ? Colors.dark.text : Colors[colorScheme ?? 'dark'].lightCard}
+                    />
                 </ThemedView>
                 <ThemedView style={styles.itemContainer}>
                     <ThemedView style={styles.itemLeftSide}>
@@ -27,7 +57,20 @@ const SettingsPlaybackSection = () => {
                             Videos will start muted by default. You can turn sound on at any time.
                         </ThemedText>
                     </ThemedView>
-                    <Switch />
+                    <Switch
+                        value={data.autoMuteVideo}
+                        disabled={isUpdating}
+                        onValueChange={(value) =>
+                            updateSetting({
+                                autoMuteVideo: value
+                            })
+                        }
+                        trackColor={{
+                            true: Colors[colorScheme ?? 'dark'].blue,
+                            false: Colors[colorScheme ?? 'dark'].card,
+                        }}
+                        thumbColor={data.autoMuteVideo ? Colors.dark.text : Colors[colorScheme ?? 'dark'].lightCard}
+                    />
                 </ThemedView>
                 <ThemedView style={styles.itemContainer}>
                     <ThemedView style={styles.itemLeftSide}>
@@ -36,7 +79,20 @@ const SettingsPlaybackSection = () => {
                             Play supported videos in high dynamic range for improved contrast and colors.
                         </ThemedText>
                     </ThemedView>
-                    <Switch />
+                    <Switch
+                        value={data.enableHdr}
+                        disabled={isUpdating}
+                        onValueChange={(value) =>
+                            updateSetting({
+                                enableHdr: value
+                            })
+                        }
+                        trackColor={{
+                            true: Colors[colorScheme ?? 'dark'].blue,
+                            false: Colors[colorScheme ?? 'dark'].card,
+                        }}
+                        thumbColor={data.enableHdr ? Colors.dark.text : Colors[colorScheme ?? 'dark'].lightCard}
+                    />
                 </ThemedView>
             </ThemedView>
         </ScrollView>

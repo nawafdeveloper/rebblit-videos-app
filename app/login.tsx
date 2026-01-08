@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
         paddingVertical: Platform.OS === 'android' ? 8 : 18,
-        borderBottomWidth: 1
+        borderBottomWidth: 1 
     },
     input: {
         flex: 1

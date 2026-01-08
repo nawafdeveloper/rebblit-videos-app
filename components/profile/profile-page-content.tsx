@@ -6,8 +6,6 @@ import { MaterialTabBar, Tabs } from 'react-native-collapsible-tab-view';
 import ProfilePageContentHeader from './profile-page-content-header';
 import ProfilePageItem from './profile-page-item';
 
-const HEADER_HEIGHT = 350;
-
 const ProfilePageContent = () => {
     const colorScheme = useColorScheme();
 
