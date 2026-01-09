@@ -1,4 +1,5 @@
 import SettingIdHeader from '@/components/settings/setting-id-header'
+import SettingPageEmailVerificationOtp from '@/components/settings/setting-page-email-verification-otp'
 import SettingsPageAccountInformationSection from '@/components/settings/settings-page-account-info-section'
 import SettingsPageAccountSection from '@/components/settings/settings-page-account-section'
 import SettingsPageBlockedUsersSection from '@/components/settings/settings-page-blocked-users-section'
@@ -48,6 +49,8 @@ const SettingDetails = () => {
                 return <SettingsPagePasswordSection />;
             case 'Edit profile':
                 return <SettingsPageEditProfileSection />;
+            case 'Confirm Email':
+                return <SettingPageEmailVerificationOtp />
             default: null;
         }
     };

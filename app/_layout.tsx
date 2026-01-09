@@ -3,6 +3,7 @@ import { Colors } from '@/constants/theme';
 import { LoadingProvider } from '@/context/loading-context';
 import { NotificationsProvider } from '@/context/notification-context';
 import { ToastProvider } from '@/context/toast-context';
+import { initAnalyticsDb } from '@/db/analytics-db';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { authClient } from '@/lib/auth-client';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -22,6 +23,9 @@ import 'react-native-reanimated';
 const queryClient = new QueryClient()
 
 SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({
+  fade: true,
+});
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -40,6 +44,10 @@ export default function RootLayout() {
       SplashScreen.hide();
     }
   }, [isPending]);
+
+  useEffect(() => {
+    initAnalyticsDb();
+  }, []);
 
   if (isPending) {
     return <GlobalLoading />;

@@ -2,10 +2,10 @@ import { Colors } from '@/constants/theme';
 import { useToast } from '@/context/toast-context';
 import { authClient } from '@/lib/auth-client';
 import { useUserProfileStore } from '@/store/user-profile-store';
+import { Skeleton } from 'moti/skeleton';
 import React, { useEffect } from 'react';
 import { Image, Pressable, StyleSheet, useColorScheme } from 'react-native';
 import Icon from "react-native-remix-icon";
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { ThemedText } from '../themed-text';
 import { ThemedView } from '../themed-view';
 
@@ -27,19 +27,12 @@ const ProfilePageContentHeader = () => {
         <ThemedView style={styles.main}>
             <ThemedView style={styles.topContent}>
                 {isLoading ? (
-                    <ThemedView style={{ backgroundColor: 'transparent' }}>
-                        <SkeletonPlaceholder
-                            backgroundColor={Colors[colorScheme ?? 'dark'].card}
-                            highlightColor={Colors[colorScheme ?? 'dark'].background}
-                            angle={45}
-                        >
-                            <SkeletonPlaceholder.Item
-                                width={90}
-                                height={90}
-                                borderRadius={99}
-                            />
-                        </SkeletonPlaceholder>
-                    </ThemedView>
+                    <Skeleton
+                        colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                        radius="round"
+                        height={90}
+                        width={90}
+                    />
                 ) : (
                     <>
                         {profile?.avatarUrl ? (
@@ -58,41 +51,29 @@ const ProfilePageContentHeader = () => {
                     </>
                 )}
                 {isPending ? (
-                    <ThemedView style={{ backgroundColor: 'transparent' }}>
-                        <SkeletonPlaceholder
-                            backgroundColor={Colors[colorScheme ?? 'dark'].card}
-                            highlightColor={Colors[colorScheme ?? 'dark'].background}
-                            angle={45}
-                        >
-                            <SkeletonPlaceholder.Item
-                                width={50}
-                                height={15}
-                                borderRadius={5}
-                            />
-                        </SkeletonPlaceholder>
-                    </ThemedView>
+                    <Skeleton
+                        colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                        radius={5}
+                        height={15}
+                        width={50}
+                    />
                 ) : (
                     <ThemedText style={styles.username}>@{session?.user.username}</ThemedText>
                 )}
                 {isLoading ? (
-                    <ThemedView style={{ backgroundColor: 'transparent' }}>
-                        <SkeletonPlaceholder
-                            backgroundColor={Colors[colorScheme ?? 'dark'].card}
-                            highlightColor={Colors[colorScheme ?? 'dark'].background}
-                            angle={45}
-                        >
-                            <SkeletonPlaceholder.Item
-                                width={90}
-                                height={15}
-                                borderRadius={5}
-                            />
-                            <SkeletonPlaceholder.Item
-                                width={90}
-                                height={15}
-                                borderRadius={5}
-                                style={{ marginTop: 5 }}
-                            />
-                        </SkeletonPlaceholder>
+                    <ThemedView style={{ backgroundColor: 'transparent', gap: 10, justifyContent: 'center', alignItems: 'center' }}>
+                        <Skeleton
+                            colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                            radius={5}
+                            height={15}
+                            width={160}
+                        />
+                        <Skeleton
+                            colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                            radius={5}
+                            height={15}
+                            width={90}
+                        />
                     </ThemedView>
                 ) : (
                     <>
@@ -111,17 +92,44 @@ const ProfilePageContentHeader = () => {
             </ThemedView>
             <ThemedView style={styles.paramsContainer}>
                 <Pressable style={styles.singleParamContainer}>
-                    <ThemedText style={styles.paramNumber}>0</ThemedText>
+                    {isLoading ? (
+                        <Skeleton
+                            colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                            radius={5}
+                            height={20}
+                            width={20}
+                        />
+                    ) : (
+                        <ThemedText style={styles.paramNumber}>{profile?.followingCount}</ThemedText>
+                    )}
                     <ThemedText style={styles.paramTitle}>Following</ThemedText>
                 </Pressable>
                 <ThemedView style={[styles.divider, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]} />
                 <Pressable style={styles.singleParamContainer}>
-                    <ThemedText style={styles.paramNumber}>0</ThemedText>
+                    {isLoading ? (
+                        <Skeleton
+                            colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                            radius={5}
+                            height={20}
+                            width={20}
+                        />
+                    ) : (
+                        <ThemedText style={styles.paramNumber}>{profile?.followerCount}</ThemedText>
+                    )}
                     <ThemedText style={styles.paramTitle}>Followers</ThemedText>
                 </Pressable>
                 <ThemedView style={[styles.divider, { backgroundColor: Colors[colorScheme ?? 'dark'].card }]} />
                 <Pressable style={styles.singleParamContainer}>
-                    <ThemedText style={styles.paramNumber}>0</ThemedText>
+                    {isLoading ? (
+                        <Skeleton
+                            colorMode={colorScheme === 'dark' ? 'dark' : 'light'}
+                            radius={5}
+                            height={20}
+                            width={20}
+                        />
+                    ) : (
+                        <ThemedText style={styles.paramNumber}>{profile?.postsCount}</ThemedText>
+                    )}
                     <ThemedText style={styles.paramTitle}>Posts</ThemedText>
                 </Pressable>
             </ThemedView>
@@ -163,7 +171,8 @@ const styles = StyleSheet.create({
         lineHeight: 14
     },
     addBioButton: {
-        paddingHorizontal: 8,
+        paddingLeft: 8,
+        paddingRight: 14,
         paddingVertical: 4,
         borderRadius: 99,
         borderCurve: 'continuous',
