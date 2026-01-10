@@ -69,6 +69,7 @@ export default function RootLayout() {
                       <Stack.Screen name="login" options={{ headerShown: false }} />
                       <Stack.Screen name="signup" options={{ headerShown: false }} />
                       <Stack.Screen name="request-otp-reset-password" options={{ headerShown: false }} />
+                      <Stack.Screen name="two-factor-otp" options={{ headerShown: false, animation: 'none' }} />
                     </Stack.Protected>
                     <Stack.Protected guard={session?.session.token.length !== 0}>
                       <Stack.Protected guard={!session?.user.hasProfile}>

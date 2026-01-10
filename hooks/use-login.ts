@@ -1,6 +1,7 @@
 import { useLoading } from "@/context/loading-context";
 import { useToast } from "@/context/toast-context";
 import { authClient } from "@/lib/auth-client";
+import { router } from "expo-router";
 import { useState } from "react";
 
 export const useLogin = () => {
@@ -29,6 +30,16 @@ export const useLogin = () => {
             const { error } = await authClient.signIn.username({
                 username,
                 password,
+            }, {
+                onSuccess(context) {
+                    if (context.data?.twoFactorRequired) {
+                        showToast('We send you verification code to your email address.', 'info');
+                        router.push('/two-factor-otp');
+                        return;
+                    }
+
+                    showToast('You have logged in successfully.', 'success');
+                },
             });
 
             if (error) {
@@ -37,8 +48,6 @@ export const useLogin = () => {
                 setErrorText(error.message || 'There was error occured, please try again.');
                 return;
             }
-
-            showToast('You have logged in successfully.');
         } catch (error: any) {
             showToast(error.message || 'You lost connection with network, please try again later', 'error');
             setIsError(true);

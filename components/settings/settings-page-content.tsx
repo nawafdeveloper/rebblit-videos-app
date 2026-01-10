@@ -31,7 +31,7 @@ const SettingsPageContent = () => {
                 <Pressable onPress={() => pressRouting('Privacy settings')} style={styles.buttonContainer}>
                     <ThemedView style={styles.leftContainer}>
                         <Icon name="lock-2-line" size="20" color={Colors[colorScheme ?? 'dark'].text} fallback={null} />
-                        <ThemedText>Privacy settings</ThemedText>
+                        <ThemedText>Privacy & security</ThemedText>
                     </ThemedView>
                     <Icon name="arrow-right-s-line" size="24" color='gray' fallback={null} />
                 </Pressable>

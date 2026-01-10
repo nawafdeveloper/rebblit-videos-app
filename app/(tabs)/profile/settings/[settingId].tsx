@@ -5,6 +5,7 @@ import SettingsPageAccountSection from '@/components/settings/settings-page-acco
 import SettingsPageBlockedUsersSection from '@/components/settings/settings-page-blocked-users-section'
 import SettingsPageDisplaySection from '@/components/settings/settings-page-display-section'
 import SettingsPageEditProfileSection from '@/components/settings/settings-page-edit-profile-section'
+import SettingsPageEnableTwoFactorSection from '@/components/settings/settings-page-enable-two-factor'
 import SettingsPageHelpCenterSection from '@/components/settings/settings-page-help-center-section'
 import SettingsPageLanguageSection from '@/components/settings/settings-page-language-section'
 import SettingsPageNotificationsSection from '@/components/settings/settings-page-notifications-section'
@@ -50,7 +51,9 @@ const SettingDetails = () => {
             case 'Edit profile':
                 return <SettingsPageEditProfileSection />;
             case 'Confirm Email':
-                return <SettingPageEmailVerificationOtp />
+                return <SettingPageEmailVerificationOtp />;
+            case 'Enable Two factor':
+                return <SettingsPageEnableTwoFactorSection />
             default: null;
         }
     };
