@@ -1,9 +1,9 @@
 import GlobalLoading from '@/components/global-loading';
 import { Colors } from '@/constants/theme';
+import { ImageOverlayProvider } from '@/context/avatar-preview-context';
 import { LoadingProvider } from '@/context/loading-context';
 import { NotificationsProvider } from '@/context/notification-context';
 import { ToastProvider } from '@/context/toast-context';
-import { initAnalyticsDb } from '@/db/analytics-db';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { authClient } from '@/lib/auth-client';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -45,10 +45,6 @@ export default function RootLayout() {
     }
   }, [isPending]);
 
-  useEffect(() => {
-    initAnalyticsDb();
-  }, []);
-
   if (isPending) {
     return <GlobalLoading />;
   }
@@ -61,27 +57,29 @@ export default function RootLayout() {
             <ToastProvider>
               <LoadingProvider>
                 <QueryClientProvider client={queryClient}>
-                  <Stack screenOptions={{
-                    contentStyle: { backgroundColor: Colors[colorScheme ?? 'dark'].background }
-                  }}>
-                    <Stack.Protected guard={!session}>
-                      <Stack.Screen name="index" options={{ headerShown: false, animation: 'none', gestureEnabled: false }} />
-                      <Stack.Screen name="login" options={{ headerShown: false }} />
-                      <Stack.Screen name="signup" options={{ headerShown: false }} />
-                      <Stack.Screen name="request-otp-reset-password" options={{ headerShown: false }} />
-                      <Stack.Screen name="two-factor-otp" options={{ headerShown: false, animation: 'none' }} />
-                    </Stack.Protected>
-                    <Stack.Protected guard={session?.session.token.length !== 0}>
-                      <Stack.Protected guard={!session?.user.hasProfile}>
-                        <Stack.Screen name="new-profile" options={{ headerShown: false, gestureEnabled: false, animation: 'none' }} />
+                  <ImageOverlayProvider>
+                    <Stack screenOptions={{
+                      contentStyle: { backgroundColor: Colors[colorScheme ?? 'dark'].background }
+                    }}>
+                      <Stack.Protected guard={!session}>
+                        <Stack.Screen name="index" options={{ headerShown: false, animation: 'none', gestureEnabled: false }} />
+                        <Stack.Screen name="login" options={{ headerShown: false }} />
+                        <Stack.Screen name="signup" options={{ headerShown: false }} />
+                        <Stack.Screen name="request-otp-reset-password" options={{ headerShown: false }} />
+                        <Stack.Screen name="two-factor-otp" options={{ headerShown: false, animation: 'none' }} />
                       </Stack.Protected>
-                      <Stack.Protected guard={session?.user.hasProfile === true}>
-                        <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none', gestureEnabled: false }} />
-                        <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
-                        <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                      <Stack.Protected guard={session?.session.token.length !== 0}>
+                        <Stack.Protected guard={!session?.user.hasProfile}>
+                          <Stack.Screen name="new-profile" options={{ headerShown: false, gestureEnabled: false, animation: 'none' }} />
+                        </Stack.Protected>
+                        <Stack.Protected guard={session?.user.hasProfile === true}>
+                          <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'none', gestureEnabled: false }} />
+                          <Stack.Screen name="create-post" options={{ presentation: 'fullScreenModal', headerShown: false }} />
+                          <Stack.Screen name="image-picker" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+                        </Stack.Protected>
                       </Stack.Protected>
-                    </Stack.Protected>
-                  </Stack>
+                    </Stack>
+                  </ImageOverlayProvider>
                 </QueryClientProvider>
                 <StatusBar style="auto" />
               </LoadingProvider>

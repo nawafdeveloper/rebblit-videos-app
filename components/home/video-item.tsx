@@ -1,5 +1,4 @@
 import { Colors } from '@/constants/theme';
-import { addViewEvent, createVideoSession } from '@/lib/video-analytics';
 import { Slider } from '@miblanchard/react-native-slider';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import React, { useEffect, useRef, useState } from 'react';
@@ -48,9 +47,6 @@ const VideoItem = ({
 
     const hideTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
     const updateInterval = useRef<ReturnType<typeof setInterval> | null>(null);
-    const sessionIdRef = useRef<string | null>(null);
-    const watchStartRef = useRef<number | null>(null);
-    const completedRef = useRef(false);
 
     const player = useVideoPlayer({ uri: postUrl }, player => {
         player.loop = true;
@@ -84,54 +80,9 @@ const VideoItem = ({
         if (isFocused) {
             player.play();
             setIsPlaying(true);
-
-            if (!sessionIdRef.current) {
-                createVideoSession(postId).then(id => {
-                    sessionIdRef.current = id;
-                    watchStartRef.current = Date.now();
-                });
-            }
         } else {
             player.pause();
             setIsPlaying(false);
-
-            if (sessionIdRef.current && watchStartRef.current) {
-                const watchTime = (Date.now() - watchStartRef.current) / 1000;
-                addViewEvent({
-                    sessionId: sessionIdRef.current,
-                    videoId: postId,
-                    watchTime,
-                    duration
-                });
-                sessionIdRef.current = null;
-                watchStartRef.current = null;
-            }
-        }
-    }, [isFocused]);
-
-    useEffect(() => {
-        if (!player || !sessionIdRef.current) return;
-
-        if (
-            player.status === 'readyToPlay' &&
-            !completedRef.current &&
-            duration > 0 &&
-            player.currentTime >= duration * 0.98
-        ) {
-            completedRef.current = true;
-
-            addViewEvent({
-                sessionId: sessionIdRef.current,
-                videoId: postId,
-                watchTime: duration,
-                duration
-            });
-        }
-    }, [player.currentTime, duration]);
-
-    useEffect(() => {
-        if (!isFocused) {
-            completedRef.current = false;
         }
     }, [isFocused]);
 

@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         borderCurve: 'continuous',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%'
+        marginHorizontal: 16
     },
     sendButtonText: {
         fontWeight: '600'

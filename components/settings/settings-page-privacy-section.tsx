@@ -1,16 +1,13 @@
 import { Colors } from '@/constants/theme';
 import { authClient } from '@/lib/auth-client';
 import { usePrivacySettings } from '@/queries/privacy-settings.query';
-import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    Pressable,
     ScrollView,
     StyleSheet,
     Switch,
-    useColorScheme,
+    useColorScheme
 } from 'react-native';
-import Icon from 'react-native-remix-icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import GlobalLoading from '../global-loading';
 import { ThemedText } from '../themed-text';
@@ -83,7 +80,7 @@ const SettingsPrivacySection = () => {
                         }
                     />
                 </ThemedView>
-                <Pressable
+                {/* <Pressable
                     onPress={() => router.push({ pathname: '/(tabs)/profile/settings/[settingId]', params: { settingId: 'Enable Two factor' } })}
                     style={styles.item}>
                     <ThemedView style={styles.itemLeftSide}>
@@ -108,7 +105,7 @@ const SettingsPrivacySection = () => {
                             fallback={null}
                         />
                     </ThemedView>
-                </Pressable>
+                </Pressable> */}
             </ThemedView>
         </ScrollView>
     );

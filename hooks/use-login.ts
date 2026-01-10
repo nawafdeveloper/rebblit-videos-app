@@ -27,15 +27,30 @@ export const useLogin = () => {
         try {
             setLoading(true);
 
-            const { error } = await authClient.signIn.username({
+            const { data, error } = await authClient.signIn.username({
                 username,
                 password,
             }, {
-                onSuccess(context) {
-                    if (context.data?.twoFactorRequired) {
-                        showToast('We send you verification code to your email address.', 'info');
-                        router.push('/two-factor-otp');
-                        return;
+                async onSuccess(context) {
+                    if (context.data.twoFactorRedirect === true) {
+                        const { error } = await authClient.twoFactor.sendOtp({
+                            fetchOptions: {
+                                body: {
+                                    trustDevice: true,
+                                },
+                            },
+                        });
+
+                        if (error) {
+                            showToast(error.message || 'There was error occured, please try again.', 'error');
+                            setIsError(true);
+                            setErrorText(error.message || 'There was error occured, please try again.');
+                            return;
+                        }
+
+                            showToast('We send you verification code to your email address.', 'info');
+                            router.replace('/two-factor-otp');
+                            return;
                     }
 
                     showToast('You have logged in successfully.', 'success');

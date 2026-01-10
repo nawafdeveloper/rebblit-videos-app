@@ -88,6 +88,7 @@ export const useNewProfileStore = create<NewProfileStore>((set, get) => ({
             formData.append("biography", biography ?? "");
             formData.append("prefered_language", preferedLang);
             formData.append("gender", gender);
+            formData.append("birthday", birthday.toISOString().split('T')[0]);
 
             if (avatar) {
                 formData.append("avatar_raw", {

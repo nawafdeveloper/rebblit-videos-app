@@ -1,5 +1,7 @@
 import { Colors } from '@/constants/theme';
+import { useImageOverlay } from '@/context/avatar-preview-context';
 import { useToast } from '@/context/toast-context';
+import { formatCounts } from '@/helper/format-counts';
 import { authClient } from '@/lib/auth-client';
 import { useUserProfileStore } from '@/store/user-profile-store';
 import { Skeleton } from 'moti/skeleton';
@@ -12,6 +14,7 @@ import { ThemedView } from '../themed-view';
 const ProfilePageContentHeader = () => {
     const colorScheme = useColorScheme();
     const { showToast } = useToast();
+    const { showImage } = useImageOverlay();
     const { data: session, isPending } = authClient.useSession();
     const fetchProfile = useUserProfileStore((s) => s.fetchProfile);
     const profile = useUserProfileStore((s) => s.profile);
@@ -36,11 +39,15 @@ const ProfilePageContentHeader = () => {
                 ) : (
                     <>
                         {profile?.avatarUrl ? (
-                            <Image
-                                source={{ uri: profile.avatarUrl }}
-                                resizeMode='cover'
-                                style={[styles.avatar, { borderColor: Colors[colorScheme ?? 'dark'].card }]}
-                            />
+                            <Pressable
+                                onPress={() => showImage(profile.avatarUrl)}
+                            >
+                                <Image
+                                    source={{ uri: profile.avatarUrl }}
+                                    resizeMode='cover'
+                                    style={[styles.avatar, { borderColor: Colors[colorScheme ?? 'dark'].card }]}
+                                />
+                            </Pressable>
                         ) : (
                             <ThemedView style={[styles.avatar, { borderColor: Colors[colorScheme ?? 'dark'].card, backgroundColor: Colors[colorScheme ?? 'dark'].lightCard, overflow: 'hidden' }]}>
                                 <ThemedView style={{ backgroundColor: 'transparent', marginTop: 30 }}>
@@ -100,7 +107,7 @@ const ProfilePageContentHeader = () => {
                             width={20}
                         />
                     ) : (
-                        <ThemedText style={styles.paramNumber}>{profile?.followingCount}</ThemedText>
+                        <ThemedText style={styles.paramNumber}>{formatCounts(profile?.followingCount)}</ThemedText>
                     )}
                     <ThemedText style={styles.paramTitle}>Following</ThemedText>
                 </Pressable>
@@ -114,7 +121,7 @@ const ProfilePageContentHeader = () => {
                             width={20}
                         />
                     ) : (
-                        <ThemedText style={styles.paramNumber}>{profile?.followerCount}</ThemedText>
+                        <ThemedText style={styles.paramNumber}>{formatCounts(profile?.followerCount)}</ThemedText>
                     )}
                     <ThemedText style={styles.paramTitle}>Followers</ThemedText>
                 </Pressable>
@@ -128,12 +135,12 @@ const ProfilePageContentHeader = () => {
                             width={20}
                         />
                     ) : (
-                        <ThemedText style={styles.paramNumber}>{profile?.postsCount}</ThemedText>
+                        <ThemedText style={styles.paramNumber}>{formatCounts(profile?.postsCount)}</ThemedText>
                     )}
                     <ThemedText style={styles.paramTitle}>Posts</ThemedText>
                 </Pressable>
             </ThemedView>
-        </ThemedView>
+        </ThemedView >
     )
 }
 
